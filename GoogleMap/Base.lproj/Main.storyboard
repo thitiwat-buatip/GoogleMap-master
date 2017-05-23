@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,20 +22,54 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hc4-u5-d4E">
-                                <rect key="frame" x="67" y="269" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hc4-u5-d4E">
+                                <rect key="frame" x="62" y="344" width="250" height="250"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="250" id="nan-ZQ-lrB"/>
+                                    <constraint firstAttribute="width" constant="250" id="vAc-Db-aWD"/>
+                                </constraints>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aCy-k4-AiK">
-                                <rect key="frame" x="67" y="269" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TAj-fb-CxX">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Fpr-M1-zFC"/>
+                                </constraints>
+                                <color key="barTintColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <items>
+                                    <navigationItem title="First View" id="vPS-zr-Znm"/>
+                                </items>
+                            </navigationBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aCy-k4-AiK">
+                                <rect key="frame" x="62" y="344" width="250" height="250"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="9P4-5a-CYM"/>
+                                    <constraint firstAttribute="height" constant="250" id="OV4-T8-ZN5"/>
+                                </constraints>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="map icon" translatesAutoresizingMaskIntoConstraints="NO" id="S5R-II-K7L">
+                                <rect key="frame" x="87" y="122" width="200" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="Kxt-pL-8gu"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.0" green="1" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="TAj-fb-CxX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="A4O-1b-t4w"/>
+                            <constraint firstItem="aCy-k4-AiK" firstAttribute="centerX" secondItem="TAj-fb-CxX" secondAttribute="centerX" id="C0B-cH-uzw"/>
+                            <constraint firstItem="S5R-II-K7L" firstAttribute="top" secondItem="TAj-fb-CxX" secondAttribute="bottom" constant="58" id="HYw-5T-zRo"/>
+                            <constraint firstItem="aCy-k4-AiK" firstAttribute="top" secondItem="TAj-fb-CxX" secondAttribute="bottom" constant="280" id="NcS-lD-lJa"/>
+                            <constraint firstItem="TAj-fb-CxX" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="QYY-OD-Qsp"/>
+                            <constraint firstItem="hc4-u5-d4E" firstAttribute="top" secondItem="TAj-fb-CxX" secondAttribute="bottom" constant="280" id="Wum-fc-CDF"/>
+                            <constraint firstItem="S5R-II-K7L" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="71" id="aUF-We-FUY"/>
+                            <constraint firstAttribute="trailing" secondItem="TAj-fb-CxX" secondAttribute="trailing" id="o2W-Bv-pQz"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="S5R-II-K7L" secondAttribute="trailing" constant="72" id="oSr-l4-tbV"/>
+                            <constraint firstItem="hc4-u5-d4E" firstAttribute="leading" secondItem="aCy-k4-AiK" secondAttribute="leading" id="rms-Uh-oJJ"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="mapView" destination="hc4-u5-d4E" id="WIL-06-xd9"/>
@@ -65,8 +100,7 @@
                                     <navigationItem title="Location" id="U4h-aj-uWh">
                                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="VNY-3R-dlh">
                                             <connections>
-                                                <action selector="tappedCancel:" destination="wtN-PK-GXZ" id="BEq-Fw-9DI"/>
-                                                <segue destination="BYZ-38-t0r" kind="show" id="tEW-YR-h5c"/>
+                                                <action selector="cancelBtn:" destination="wtN-PK-GXZ" id="ilz-U9-Xpa"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="Uqp-Wu-6IB">
@@ -102,4 +136,7 @@
             <point key="canvasLocation" x="930" y="69"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="map icon" width="512" height="512"/>
+    </resources>
 </document>

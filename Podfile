@@ -8,5 +8,7 @@ target 'GoogleMap' do
   # Pods for GoogleMap
 pod 'GoogleMaps'
 pod 'GooglePlaces'
+pod 'GooglePlacesAPI'
+pod 'SwiftyJSON'
 
 end

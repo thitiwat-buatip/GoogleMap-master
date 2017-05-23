@@ -21,6 +21,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var locationmanager = CLLocationManager()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        mapView.clipsToBounds = true
+        mapView.layer.cornerRadius = 15
         tapView.backgroundColor = UIColor( white : 1 , alpha : 0)
         let gesture = UITapGestureRecognizer(target: self, action: #selector(Tapped))
         gesture.numberOfTapsRequired = 1
