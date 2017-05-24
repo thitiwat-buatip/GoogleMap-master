@@ -19,6 +19,10 @@ class LocationVC: UIViewController , UISearchBarDelegate,CLLocationManagerDelega
     var locationmanager = CLLocationManager()
     var locationStart = CLLocation()
     var locationEnd = CLLocation()
+    
+    var origin = String()
+    var destination = String()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -42,17 +46,18 @@ class LocationVC: UIViewController , UISearchBarDelegate,CLLocationManagerDelega
         locationEnd = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         mark.title = "End Location"
         mark.snippet = "lat:\(coordinate.latitude) long:\(coordinate.longitude)"
+        
         drawPath(startLocation: locationStart, endLocation: locationEnd)
         mark.map = mapView
 
     }
     
     func initGoogleMap(){
-        mapView = GMSMapView.map(withFrame: googleMapContrainer.frame, camera: GMSCameraPosition())
-        mapView.isMyLocationEnabled = true
+        mapView = GMSMapView.map(withFrame: self.googleMapContrainer.bounds, camera: GMSCameraPosition())
+        //mapView.isMyLocationEnabled = true
         mapView.settings.myLocationButton = true
         mapView.settings.compassButton = true
-        view.addSubview(mapView)
+        googleMapContrainer.addSubview(mapView)
 
     }
     @IBAction func cancelBtn(_ sender: Any) {
@@ -72,8 +77,22 @@ class LocationVC: UIViewController , UISearchBarDelegate,CLLocationManagerDelega
         
         let location = locations.last
         let camera = GMSCameraPosition.camera(withLatitude: (location?.coordinate.latitude)!, longitude: (location?.coordinate.longitude)!, zoom: 15.0)
-//        let position = CLLocationCoordinate2D(latitude: (location?.coordinate.latitude)!, longitude: (location?.coordinate.longitude)!)
+        let position = CLLocationCoordinate2D(latitude: (location?.coordinate.latitude)!, longitude: (location?.coordinate.longitude)!)
         locationStart = CLLocation(latitude: (location?.coordinate.latitude)!, longitude: (location?.coordinate.longitude)!)
+        
+        let mark = GMSMarker(position: position)
+        mark.map = mapView
+        mark.title = "Your here"
+        
+        let markerImage = UIImage(named: "human")!.withRenderingMode(.alwaysOriginal)
+
+        let markerView = UIImageView(image: markerImage)
+        markerView.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        markerView.backgroundColor = UIColor(white: 1, alpha: 0)
+        mark.iconView = markerView
+        mapView.selectedMarker = mark
+        
+        
         locationmanager.stopUpdatingLocation()
         self.mapView.animate(to: camera)
         
@@ -99,6 +118,7 @@ class LocationVC: UIViewController , UISearchBarDelegate,CLLocationManagerDelega
         mark.map = mapView
         mark.title = place.name
         mark.snippet = place.formattedAddress
+        mapView.selectedMarker = mark
         self.mapView.camera = camera
         self.dismiss(animated: true, completion: nil)
         
@@ -115,8 +135,8 @@ class LocationVC: UIViewController , UISearchBarDelegate,CLLocationManagerDelega
     
     func drawPath(startLocation: CLLocation, endLocation: CLLocation)
     {
-        let origin = "\(startLocation.coordinate.latitude),\(startLocation.coordinate.longitude)"
-        let destination = "\(endLocation.coordinate.latitude),\(endLocation.coordinate.longitude)"
+        origin = "\(startLocation.coordinate.latitude),\(startLocation.coordinate.longitude)"
+        destination = "\(endLocation.coordinate.latitude),\(endLocation.coordinate.longitude)"
         
         
         let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving"
@@ -145,15 +165,20 @@ class LocationVC: UIViewController , UISearchBarDelegate,CLLocationManagerDelega
             
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func gotoGoogleDirection(_ sender: Any) {
+        
+        if destination == "" {
+            
+            let alert = UIAlertController(title: "Alert", message: "Please select Destination Place", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+        else {
+            if let url = URL(string: "https://maps.google.com?saddr=\(origin)&daddr=\(destination)") {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        }
     }
-    */
-
+    
 }
